@@ -28,7 +28,7 @@ Now run the API using the Uvicorn server
 $ uvicorn app.main:app --reload
 ```
 
-## Run REST API tests
+## Run REST API pipelines 
  
 Open your terminal, and cd into the `rest` directory.
 
@@ -36,16 +36,16 @@ Open your terminal, and cd into the `rest` directory.
 $ cd ./rest
 ```
 
-Then install the dev dependencies
+Then install the dependencies
 
 ```bash
-$ pip install -r dev-requirements.txt
+$ pip install -r requirements.txt -r dev-requirements.txt
 ```
 
-Now run the tests with pytest
+Now run the pipelines with nox
 
 ```bash
-$ pytest
+$ nox
 ```
 ## License
 
