@@ -4,7 +4,7 @@ from ..utils.service import ServiceResult
 from ..schemas.users import CreateUserBody, LoginUserBody
 from ..utils.database import DatabaseContext
 from ..models import User
-from fastapi import Response, Header
+from fastapi import Response
 from fastapi.exceptions import HTTPException
 
 

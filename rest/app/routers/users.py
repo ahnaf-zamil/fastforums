@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response, Request
+from fastapi import APIRouter, Depends, Response
 
 from ..utils.auth import auth_required
 from ..services.jwt import JWTService

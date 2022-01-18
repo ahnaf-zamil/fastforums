@@ -1,2 +1,4 @@
 pytest
-requests
+nox
+black
+flake8

@@ -8,9 +8,7 @@ class User(Base):
 
     __tablename__ = "users"
 
-    id = Column(
-        String(36), primary_key=True, index=True, default=lambda x: str(uuid4())
-    )
+    id = Column(String(36), primary_key=True, index=True, default=lambda x: str(uuid4()))
     username = Column(String(30), nullable=False)
     email = Column(String(256), nullable=False, unique=True)
     password = Column(LargeBinary, nullable=False)

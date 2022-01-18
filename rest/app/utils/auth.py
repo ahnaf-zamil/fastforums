@@ -1,7 +1,6 @@
 from fastapi import Request, Depends
 from ..services.jwt import JWTService
 from ..services.user import UserService
-from jwt.exceptions import PyJWTError
 
 
 async def auth_required(request: Request, user_service: UserService = Depends()):
