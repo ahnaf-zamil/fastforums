@@ -1,10 +1,9 @@
-from typing import Optional
 from pydantic import BaseModel, constr
 
 
 class UserAuthBase(BaseModel):
     email: constr(
-        regex=r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"
+        regex=r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"  # noqa: F722
     )
     password: constr(min_length=8)
 

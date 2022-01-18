@@ -35,4 +35,4 @@ class DatabaseContext:
         self.db.close()
 
 
-from ..models import User
+from ..models import User  # noqa: F401, E402
