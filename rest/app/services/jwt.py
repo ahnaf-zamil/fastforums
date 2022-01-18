@@ -6,7 +6,7 @@ import jwt
 class JWTService:
     @staticmethod
     def generate_jwt(user_id: str):
-        return jwt.encode(
+        token = jwt.encode(
             {
                 "sub": user_id,
                 "exp": datetime.utcnow() + timedelta(days=7),
@@ -14,9 +14,9 @@ class JWTService:
             },
             config.secret_key,
             algorithm="HS256",
-        ).decode(
-            "UTF-8"
-        )  # Wrong typehint in lib, it's actually a byte obj that's why decoding it
+        )
+        # During tests, the token is string. While running server, its a bytes obj...... strange
+        return token.decode("utf-8") if isinstance(token, bytes) else token
 
     @staticmethod
     def verify_and_return_id(encoded_jwt: str):

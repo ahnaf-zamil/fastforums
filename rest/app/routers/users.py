@@ -15,7 +15,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 async def get_logged_in_user(
     user: User = Depends(auth_required),
 ):
-    return handle_result(user)
+    return user.get_json(include_email=True)
 
 
 @router.post("/create")

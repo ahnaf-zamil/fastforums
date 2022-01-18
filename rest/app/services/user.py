@@ -10,15 +10,8 @@ from fastapi.exceptions import HTTPException
 
 class UserService(DatabaseContext):
     def get_user_by_id(self, user_id: str):
-        result = ServiceResult()
-
-        try:
-            user = self.db.query(User).filter(User.id == user_id).first()
-            result.set_value(user.get_json(include_email=True))
-        except Exception as e:
-            result.set_exception(e)
-
-        return result
+        user = self.db.query(User).filter(User.id == user_id).first()
+        return user
 
     def create_user(
         self,

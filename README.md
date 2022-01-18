@@ -25,9 +25,28 @@ $ pip install -r requirements.txt
 Now run the API using the Uvicorn server
 
 ```bash
-$ uvicorn app:app --reload
+$ uvicorn app.main:app --reload
 ```
 
+## Run REST API tests
+ 
+Open your terminal, and cd into the `rest` directory.
+
+```bash
+$ cd ./rest
+```
+
+Then install the dev dependencies
+
+```bash
+$ pip install -r dev-requirements.txt
+```
+
+Now run the tests with pytest
+
+```bash
+$ pytest
+```
 ## License
 
 MIT License
