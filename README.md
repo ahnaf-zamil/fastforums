@@ -2,6 +2,12 @@
 
 A forums website made using FastAPI.
 
+## Project structure
+
+| Directory      |   Description   |
+| :------------- | :-------------: |
+| [`rest`](rest) | Python REST API |
+
 ## Running the project
 
 You can easily run the project using Docker. We use Nginx for load balancing and proxying all the services.
@@ -12,9 +18,9 @@ $ docker-compose up
 
 If you run the project with Docker Compose, it will use Nginx to proxy all the requests to the services. The following routes on the proxy correspond to services.
 
-| Routes         |   Description   |
-| :------------- | :-------------: |
-| [`/api`](rest) | Python REST API |
+| Routes | Description |
+| :----- | :---------: |
+| `/api` |  REST API   |
 
 ## License
 
