@@ -45,7 +45,6 @@ def handle_result(result: Union[ServiceResult, Any]):
             if result.error_message
             else "Internal Server Error"
         }
-
         if config.debug:
             resp["debug"] = {
                 "traceback": fmt_tcback,
