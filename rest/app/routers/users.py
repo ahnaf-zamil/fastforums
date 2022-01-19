@@ -12,9 +12,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/@me")
-async def get_logged_in_user(
-    user: User = Depends(auth_required),
-):
+async def get_logged_in_user(user: User = Depends(auth_required)):
     return user.get_json(include_email=True)
 
 

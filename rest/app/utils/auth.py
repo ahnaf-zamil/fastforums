@@ -1,4 +1,5 @@
 from fastapi import Request, Depends
+from fastapi.exceptions import HTTPException
 from ..services.jwt import JWTService
 from ..services.user import UserService
 
@@ -11,5 +12,8 @@ async def auth_required(request: Request, user_service: UserService = Depends())
 
     user_id = JWTService.verify_and_return_id(token)
     request.state.user_id = user_id
+    user = user_service.get_user_by_id(user_id)
 
-    return user_service.get_user_by_id(user_id)
+    if not user:
+        raise HTTPException(401, "Unauthorized")
+    return user

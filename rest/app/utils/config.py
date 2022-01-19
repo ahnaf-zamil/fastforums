@@ -4,7 +4,8 @@ from typing import Optional
 
 class AppConfig(BaseSettings):
     database_uri: Optional[str]
-    debug: Optional[bool]
+    redis_uri: Optional[str]
+    debug: Optional[str]
     secret_key: Optional[str]
 
 
