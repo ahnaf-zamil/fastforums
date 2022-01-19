@@ -10,7 +10,7 @@ You can easily run the project using Docker. We use Nginx for load balancing and
 $ docker-compose up
 ```
 
-If you run the project with Docker Compose, we use Nginx to proxy all the requests to the services. The following routes on the proxy correspond to services.
+If you run the project with Docker Compose, it will use Nginx to proxy all the requests to the services. The following routes on the proxy correspond to services.
 
 | Routes         |   Description   |
 | :------------- | :-------------: |
