@@ -27,6 +27,7 @@ services:
                 condition: service_healthy
         links:
             - postgres
+            - redis
 
     postgres:
         expose:
@@ -45,3 +46,12 @@ services:
             timeout: 5s
             retries: 5
         container_name: fastforums_postgres
+
+    redis:
+        image: redis:latest
+        restart: unless-stopped
+        expose:
+            - 6379
+        container_name: fastforums_redis
+        volumes:
+            - ./.docker/redis:/data
