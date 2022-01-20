@@ -13,5 +13,5 @@ async def auth_required(
     user = user_service.get_user_by_id(user_id)
 
     if not user:
-        raise HTTPException(401, "Unauthorized")
+        raise HTTPException(401, "You are not authenticated")
     return user
