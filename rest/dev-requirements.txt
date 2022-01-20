@@ -2,3 +2,4 @@ pytest
 nox
 black
 flake8
+fakeredis
