@@ -6,7 +6,7 @@ services:
         container_name: fastforums_proxy
         image: nginx:latest
         ports:
-            - 80:80
+            - 5050:80
         links:
             - rest_api
         depends_on:
