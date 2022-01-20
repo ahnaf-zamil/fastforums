@@ -1,15 +1,17 @@
-from fastapi import Request, Depends
-from ..services.jwt import JWTService
+from fastapi import Depends
+from fastapi.exceptions import HTTPException
 from ..services.user import UserService
+from ..utils.session import session_manager, Session
 
 
-async def auth_required(request: Request, user_service: UserService = Depends()):
+async def auth_required(
+    user_service: UserService = Depends(),
+    session: Session = Depends(session_manager.use_session),
+):
     """Dependency for getting authenticated users on required routes"""
-    token = str(
-        request.cookies.get("token")
-    )  # Stringyfy-ing because pyjwt might cry if it gets NoneType
+    user_id = session.get("user_id")
+    user = user_service.get_user_by_id(user_id)
 
-    user_id = JWTService.verify_and_return_id(token)
-    request.state.user_id = user_id
-
-    return user_service.get_user_by_id(user_id)
+    if not user:
+        raise HTTPException(401, "Unauthorized")
+    return user

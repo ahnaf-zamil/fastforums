@@ -1,10 +1,9 @@
-from ..services.jwt import JWTService
+from ..utils.session import Session
 from ..services.hash import HashService
 from ..utils.service import ServiceResult
 from ..schemas.users import CreateUserBody, LoginUserBody
 from ..utils.database import DatabaseContext
 from ..models import User
-from fastapi import Response
 from fastapi.exceptions import HTTPException
 
 
@@ -44,9 +43,8 @@ class UserService(DatabaseContext):
     def login_user(
         self,
         payload: LoginUserBody,
-        resp: Response,
         hash_service: HashService,
-        jwt_service: JWTService,
+        session: Session,
     ):
         result = ServiceResult()
         try:
@@ -59,9 +57,7 @@ class UserService(DatabaseContext):
                 result.set_err_description("Invalid email/password")
                 raise HTTPException(status_code=401)
 
-            access_token = jwt_service.generate_jwt(user.id)
-            resp.set_cookie(key="token", value=access_token, httponly=True)
-
+            session.set("user_id", user.id)
             result.set_value(user.get_json(include_email=True))
         except Exception as e:
             result.set_exception(e)

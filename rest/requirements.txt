@@ -6,3 +6,5 @@ alembic
 bcrypt
 pyjwt
 requests
+uvicorn
+redis

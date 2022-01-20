@@ -4,6 +4,7 @@ import nox
 @nox.session(reuse_venv=True)
 def tests(session):
     session.install("-r", "requirements.txt")
+    session.install("fakeredis")
     session.run("pytest")
 
 

@@ -1,0 +1,26 @@
+version: "2.1"
+
+services:
+    proxy:
+        restart: unless-stopped
+        container_name: fastforums_proxy
+        image: nginx:latest
+        ports:
+            - 5050:80
+        links:
+            - rest_api
+        depends_on:
+            - rest_api
+        volumes:
+            - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+
+    rest_api:
+        env_file: rest/.env
+        build:
+            context: rest
+        expose:
+            - 5000 # Exposing only to the network
+        restart: unless-stopped
+        container_name: fastforums_rest
+
+    # Postgres not present because it is manually deployed
