@@ -3,7 +3,6 @@ from app.main import app
 from app.utils.database import get_db
 from app.services.user import UserService
 from app.services.hash import HashService
-from app.services.jwt import JWTService
 from uuid import UUID
 
 import pytest
@@ -22,11 +21,6 @@ def hash_service():
 @pytest.fixture
 def user_service():
     yield UserService(get_db())
-
-
-@pytest.fixture
-def jwt_service():
-    yield JWTService()
 
 
 def test_create_user(
@@ -76,9 +70,7 @@ def test_invalid_payload_create_user(test_client: TestClient):
     assert response.status_code == 422, response.text
 
 
-def test_login_user(
-    test_client: TestClient, user_service: UserService, jwt_service: JWTService
-):
+def test_login_user(test_client: TestClient, user_service: UserService):
     response = test_client.post(
         "/users/login", json={"email": "test@gmail.com", "password": "test12345"}
     )
@@ -94,9 +86,11 @@ def test_login_user(
         "-", ""
     )  # Checking if ID hex matches
 
-    # Verifying token cookie
-    assert response.cookies["token"]
-    assert jwt_service.verify_and_return_id(response.cookies["token"]) == data["id"]
+    # Verifying session cookie
+    assert response.cookies["session"]
+    assert UUID(response.cookies["session"]).hex == response.cookies["session"].replace(
+        "-", ""
+    )
 
 
 def test_invalid_cred_login_user(test_client: TestClient):

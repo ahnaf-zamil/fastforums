@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 
 from ..utils.auth import auth_required
-from ..services.jwt import JWTService
 from ..utils.service import handle_result
 from ..schemas.users import CreateUserBody, LoginUserBody
 from ..services.hash import HashService
 from ..services.user import UserService
+from ..utils.session import session_manager, Session
 from ..models.user import User
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -32,11 +32,10 @@ async def create_user(
 @router.post("/login")
 async def login_user(
     payload: LoginUserBody,
-    res: Response,
     hash_service: HashService = Depends(),
     user_service: UserService = Depends(),
-    jwt_service: JWTService = Depends(),
+    session: Session = Depends(session_manager.use_session),
 ):
     """Authenticate a pre-existing user"""
-    result = user_service.login_user(payload, res, hash_service, jwt_service)
+    result = user_service.login_user(payload, hash_service, session)
     return handle_result(result)

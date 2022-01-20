@@ -1,4 +1,4 @@
-from sessions.manager import SessionManager, Session
+from sessions.manager import SessionManager, Session  # noqa
 
 import redis
 

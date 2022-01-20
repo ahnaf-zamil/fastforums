@@ -13,6 +13,7 @@ async def get_me(session: Session = Depends(session_manager.use_session)):
     print(session.get("user_id"))
 """
 
+from datetime import timedelta
 from typing import Optional
 from fastapi import Request, Depends, Response
 from collections.abc import MutableMapping
@@ -55,17 +56,17 @@ class Session(MutableMapping):
         self.response.set_cookie("session", session_id)
 
     def _get_session_data(self) -> dict:
-        self._session_check()
         try:
             return json.loads(self.redis.get(self.session_id))
         except:
             return {}
 
     def _set_session_data(self, data: dict):
-        self.redis.set(self.session_id, json.dumps(data))
+        self.redis.set(
+            self.session_id, json.dumps(data), ex=timedelta(days=15)
+        )  # Session expires after 15 days
 
     def __getitem__(self, key) -> Optional[any]:
-        self._session_check()
         try:
             return self._get_session_data().get(key)
         except:
