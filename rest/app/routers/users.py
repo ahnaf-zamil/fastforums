@@ -21,10 +21,11 @@ async def create_user(
     payload: CreateUserBody,
     hash_service: HashService = Depends(),
     user_service: UserService = Depends(),
+    session: Session = Depends(session_manager.use_session),
 ):
     """Register a user on the application"""
     hashed_pw = hash_service.get_password_hash(payload.password)
-    result = user_service.create_user(payload, hashed_pw)
+    result = user_service.create_user(payload, hashed_pw, session)
 
     return handle_result(result)
 

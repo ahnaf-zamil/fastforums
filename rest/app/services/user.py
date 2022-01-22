@@ -16,6 +16,7 @@ class UserService(DatabaseContext):
         self,
         payload: CreateUserBody,
         hashed_pw: bytes,
+        session: Session
     ):
         result = ServiceResult()
 
@@ -34,6 +35,7 @@ class UserService(DatabaseContext):
             self.db.add(new_user)
             self.db.commit()
 
+            session.set("user_id", new_user.id)
             result.set_value(new_user.get_json(include_email=True))
         except Exception as e:
             result.set_exception(e)
