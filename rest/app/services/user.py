@@ -16,6 +16,7 @@ class UserService(DatabaseContext):
         self,
         payload: CreateUserBody,
         hashed_pw: bytes,
+        session: Session
     ):
         result = ServiceResult()
 
@@ -26,7 +27,7 @@ class UserService(DatabaseContext):
 
             if user_exists:
                 result.set_err_description("User already exists")
-                raise HTTPException(status_code=429)
+                raise HTTPException(status_code=409)
 
             new_user = User(
                 username=payload.username, email=payload.email, password=hashed_pw
@@ -34,6 +35,7 @@ class UserService(DatabaseContext):
             self.db.add(new_user)
             self.db.commit()
 
+            session.set("user_id", new_user.id)
             result.set_value(new_user.get_json(include_email=True))
         except Exception as e:
             result.set_exception(e)

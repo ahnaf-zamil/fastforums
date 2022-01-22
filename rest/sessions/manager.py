@@ -53,7 +53,7 @@ class Session(MutableMapping):
     def _initiate_session(self, session_id: str) -> None:
         self.session_id = session_id
         self.redis.set(session_id, json.dumps({}))
-        self.response.set_cookie("session", session_id)
+        self.response.set_cookie("session", session_id, expires=60 * 60 * 24 * 15, httponly=True) # Expires after 15 days
 
     def _get_session_data(self) -> dict:
         try:
